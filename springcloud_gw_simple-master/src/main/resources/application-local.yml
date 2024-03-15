@@ -1,0 +1,65 @@
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+    gateway:
+      enabled: true
+
+spring:
+  main:
+    web-application-type: reactive
+  h2:
+    # h2 DB
+    console:
+      enabled: true
+      path: /h2-console
+  # Database Platform
+  sql:
+    init:
+      platform: h2
+      mode: embedded
+  #r2dbc
+  r2dbc:
+    url: r2dbc:h2:mem:///test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: login-service
+#          uri: http://localhost:8080
+#          predicates:
+#            - Path=/api/login/**
+#          filters:
+#            - AddRequestHeader=appname, login
+#            - AuthorizationHeaderFilter
+#        - id: command-service
+#          uri: http://localhost:8081
+#          predicates:
+#            - Path=/api/v1/**
+#            - Method=POST
+#          filters:
+#            - AddRequestHeader=appname, command
+#            - AuthorizationHeaderFilter
+#        - id: query-service
+#          uri: http://localhost:8082
+#          predicates:
+#            - Path=/api/v1/**
+#            - Method=GET
+#          filters:
+#            - AddRequestHeader=appname, query
+#            - AuthorizationHeaderFilter
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
+    reactor.netty: debug
+    com.kt: trace
