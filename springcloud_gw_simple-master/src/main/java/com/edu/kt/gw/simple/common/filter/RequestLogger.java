@@ -1,6 +1,7 @@
 package com.edu.kt.gw.simple.common.filter;
 
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
@@ -15,6 +16,7 @@ import reactor.core.scheduler.Schedulers;
 import java.util.UUID;
 
 @Component
+@CircuitBreaker(name="apigw")
 public class RequestLogger implements WebFilter {
 
     private static final byte[] EMPTY_BYTES = new byte[0];
